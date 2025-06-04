@@ -35,6 +35,10 @@ const isNumber = ({ valor, index }) => {
     return !isNaN(Number(valor))
 }
 
+lista.every(((valor) => {
+    return valor % 2 == 0
+}))
+
 
 const soloNumerosDeVerdad = lista.filter((valor, index) => isNumber({ valor, index }))
 
