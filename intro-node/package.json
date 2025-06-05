@@ -13,6 +13,7 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
-    "dev":"node --watch app.js" 
+    "dev": "node --watch app.js",
+    "start": "node app.js"
   }
 }
