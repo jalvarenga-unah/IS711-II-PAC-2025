@@ -1,0 +1,20 @@
+
+### Lista de peliculas
+
+GET http://localhost:3000/movies
+
+
+### Crear una pelicula
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "Inception",
+    "decription": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    "director": "Christopher Nolan",
+    "year": 2010,
+    "genre": [
+        "Science Fiction",
+        "Thriller"
+    ]
+}
