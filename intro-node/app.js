@@ -34,6 +34,20 @@ const server = createServer((req, res) => {
                     data: []
                 }))
                 return
+            } else if (url === '/movies/' + id) {
+                res.end(JSON.stringify({
+                    success: true,
+                    data: [
+                        {
+                            id: 123,
+                            title: 'The Matrix',
+                            year: 1999,
+                            director: 'Lana Wachowski, Lilly Wachowski',
+                            genre: 'Sci-Fi'
+                        }
+                    ]
+                }))
+                return
             }
 
             break
@@ -55,21 +69,26 @@ const server = createServer((req, res) => {
 
                     req.body = JSON.parse(body) // convertir el string a objeto JSON
 
+                    const id = Math.random() * 1000 // generar un id aleatorio
+                    req.body.id = parseInt(id) // asignar el id a la película
+
+                    // validar que esos datos son correctos
+                    // preparar los datos
+                    // guardar los datos en una base de datos
+                    // responder al cliente
+
+                    res.writeHead(201, 'Content-Type: application/json; charset=utf8')
+                    res.end(JSON.stringify({
+                        success: true,
+                        message: 'Película creada correctamente',
+                        data: req.body
+                    }))
                 })
 
                 //middleware
 
-                // validar que esos datos son correctos
-                // preparar los datos
-                // guardar los datos en una base de datos
-                // responder al cliente
-                res.writeHead(201, 'Content-Type: application/json')
-                res.end(JSON.stringify({
-                    success: true,
-                    message: 'Película creada correctamente',
-                    data: {}
-                }))
-                return
+
+
             }
             break
         case 'PUT':
