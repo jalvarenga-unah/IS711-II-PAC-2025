@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "title": "Inception",
+    "decription": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    "director": "Christopher Nolan",
+    "year": 2010,
+    "genre": ["Science Fiction", "Thriller"],
+    "id": 1749769847012
+  },
+  {
+    "title": "The Shawshank Redemption",
+    "decription": "Two imprisoned",
+    "director": "Frank Darabont",
+    "year": 1994,
+    "genre": ["Drama"],
+    "id": 1749769847013
+  },
+  {
+    "title": "The Godfather",
+    "decription": "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.",
+    "director": "Francis Ford Coppola",
+    "year": 1972,
+    "genre": ["Crime", "Drama"],
+    "id": 1749769847014
+  },
+  {
+    "title": "The Dark Knight",
+    "decription": "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.",
+    "director": "Christopher Nolan",
+    "year": 2008,
+    "genre": ["Action", "Crime"],
+    "id": 1749769847015
+  },
+  {
+    "title": "Pulp Fiction",
+    "decription": "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+    "director": "Quentin Tarantino",
+    "year": 1994,
+    "genre": ["Crime", "Drama"],
+    "id": 1749769847016 
+  }
+]

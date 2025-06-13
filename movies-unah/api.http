@@ -5,8 +5,10 @@ GET http://localhost:3000/movies
 
 
 ### consulta por id de pelicula
-GET http://localhost:3000/movies/1234?year=2025&genre=Terror&director=John+Doe
+GET http://localhost:3000/movies/1749769847016
 
+### consulta por genero
+GET http://localhost:3000/movies/search?genre=Action
 
 
 ### Crear una pelicula
