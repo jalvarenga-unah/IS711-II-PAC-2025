@@ -93,6 +93,11 @@ app.post('/movies', (req, res) => {
         .json(req.body)
 })
 
+//actualizar
+app.put('/movies/:id', (req, res) => { })
+// eliminar
+app.delete('/movies/:id', (req, res) => { })
+
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
 })    
