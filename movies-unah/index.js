@@ -1,6 +1,5 @@
 import express from 'express'
 import movies from './local_db/movies.json' with { type: 'json' }
-import { Message } from 'firebase-functions/pubsub'
 
 const app = express() // para crear la aplicación de express
 const PORT = process.env.PORT || 3000 // puerto donde se ejecutará la aplicación
@@ -35,6 +34,7 @@ app.get('/movies', (req, res) => {
 })
 
 app.get('/movies/search', (req, res) => {
+
 
     //TODO: tarea para ustedes, busqueda por genero, por año o genero y año
     const { genre, year } = req.query
@@ -93,10 +93,70 @@ app.post('/movies', (req, res) => {
         .json(req.body)
 })
 
-//actualizar
-app.put('/movies/:id', (req, res) => { })
 // eliminar
-app.delete('/movies/:id', (req, res) => { })
+app.delete('/movies/:id', (req, res) => {
+
+    const { id } = req.params
+    const parsedId = Number(id)
+
+    if (isNaN(parsedId)) {
+        return res.status(400).json({
+            message: 'El id no existe'
+        })
+    }
+
+    const index = movies.findIndex((movie) => movie.id == parsedId) // busca el índice de la película a eliminar)
+
+
+    // findIndex devuelve -1 si no encuentra el elemento
+    if (index === -1) {
+        res.status(400).json({
+            message: 'La película no existe'
+        })
+    }
+
+    movies.splice(index, 1) // muta el array/lista origial
+
+    res.json({
+        message: 'Pelicula eliminada correctamente',
+    })
+})
+
+//actualizar
+app.patch('/movies/:id', (req, res) => {
+    const { id } = req.params
+    const parsedId = Number(id)
+
+    if (isNaN(parsedId)) {
+        return res.status(400).json({
+            message: 'El id no existe'
+        })
+    }
+
+    //TODO: validar todas las reglas de los datos que voy a actualizar
+    const data = req.body // ya con lo que voy a a actualizar
+
+
+    //obtener el recurso que voy a actualizar, para saber si existe
+    const index = movies.findIndex((movie) => movie.id == parsedId)
+
+    // findIndex devuelve -1 si no encuentra el elemento
+    if (index === -1) {
+        res.status(400).json({
+            message: 'La película no existe'
+        })
+    }
+
+    // actualizar el recurso
+    const movieUpdated = { id: parsedId, ...data }
+    movies[index] = movieUpdated
+
+    res.json({
+        message: 'Pelicula actualizada correctamente',
+    })
+
+})
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);

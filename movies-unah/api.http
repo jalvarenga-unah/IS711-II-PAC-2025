@@ -25,3 +25,21 @@ Content-Type: application/json
         "Thriller"
     ]
 }
+
+### eliminar una pelicula
+DELETE http://localhost:3000/movies/1749769847012
+
+### Actualziar una pelicula
+PATCH http://localhost:3000/movies/1749769847012
+Content-Type: application/json
+
+{
+    "title": "Inception II",
+    "decription": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    "director": "Christopher Nolan",
+    "year": 2010,
+    "genre": [
+        "Science Fiction",
+        "Thriller"
+    ]
+}
