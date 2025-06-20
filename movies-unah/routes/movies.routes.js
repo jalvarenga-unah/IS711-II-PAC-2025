@@ -1,17 +1,31 @@
 import { Router } from 'express'
-import MovieController from '../controllers/movies.controller.js'
+
+import { isAuth } from '../middlewares/isAuth.js'
+
+import {
+    // searchByQuery as search, // un alias a la función para evitar duplicados
+    searchById,
+    create,
+    deleteMovie,
+    update,
+    getAll
+} from '../controllers/movies.controller.js'
 
 const moviesRouter = Router()
 
 //añadir proteccion a las rutas
-moviesRouter.get('/', (req, res) => {
-    MovieController.getAll(req, res)
+moviesRouter.get('/', isAuth, (req, res) => {
+    getAll(req, res)
 })
-moviesRouter.get('/search', MovieController.searchByQuery)
-moviesRouter.get('/:id', MovieController.searchById)
-moviesRouter.post('/', MovieController.create)
-moviesRouter.delete('/:id', MovieController.delete)
-moviesRouter.patch('/:id', MovieController.update)
+
+// moviesRouter.get('/search', search)
+moviesRouter.get('/:id', isAuth, searchById)
+
+moviesRouter.post('/', isAuth, create)
+
+moviesRouter.delete('/:id', isAuth, deleteMovie)
+
+moviesRouter.patch('/:id', isAuth, update)
 
 
 export default moviesRouter

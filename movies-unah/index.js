@@ -25,6 +25,15 @@ app.use(express.json()) // se encarga de parsear el body de las peticiones
 // rutas de peliculas
 app.use('/movies', moviesRoutes)
 
+// ruta por defecto, cuando no hace match 
+app.use((req, res) => {
+    res.status(404).json(
+        {
+            message: `${req.url} no encontrada`
+        }
+    )
+})
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
