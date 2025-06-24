@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Películas (Vanilla JS)</title>
+    <!-- Bootstrap CSS (v5.x) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            padding-bottom: 80px;
+            /* Espacio para el botón flotante */
+        }
+
+        .movie-card {
+            margin-bottom: 20px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            /* Asegura que todas las tarjetas en una fila tengan la misma altura */
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-top-container {
+            height: 350px;
+            /* Altura fija para la imagen */
+            overflow: hidden;
+            background-color: #e9ecef;
+            /* Color de fondo si no hay imagen */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top-left-radius: var(--bs-card-inner-border-radius);
+            border-top-right-radius: var(--bs-card-inner-border-radius);
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Escala la imagen para cubrir el contenedor */
+        }
+
+        .card-img-placeholder {
+            font-size: 1.2rem;
+            color: #6c757d;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            /* Ajustado para Bootstrap 5 */
+            font-weight: bold;
+        }
+
+        .card-subtitle {
+            font-size: 0.8rem;
+            /* Ajustado para Bootstrap 5 */
+            color: #6c757d;
+        }
+
+        .card-text {
+            flex-grow: 1;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .badge-genre {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .btn-add-movie {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1030;
+            /* Asegurar que esté sobre otros elementos */
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
+            line-height: 1;
+            /* Para centrar el + verticalmente */
+        }
+
+        .modal-body .form-group:last-child,
+        .modal-body .mb-3:last-child {
+            /* Bootstrap 5 usa mb-3 */
+            margin-bottom: 0 !important;
+        }
+
+        .form-label {
+            /* Estilo para etiquetas en Bootstrap 5 */
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Catálogo de Películas</h1>
+
+        <div id="movies-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- Las películas se cargarán aquí -->
+        </div>
+    </div>
+
+    <!-- Botón flotante para Añadir Película -->
+    <button type="button" class="btn btn-primary rounded-circle btn-add-movie shadow-lg" id="addMovieBtn">
+        +
+    </button>
+
+    <!-- Modal para Añadir/Editar Película -->
+    <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movieModalLabel">Añadir/Editar Película</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="movieForm">
+                        <input type="hidden" id="movieId">
+                        <div class="mb-3">
+                            <label for="movieTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="movieTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="movieDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="movieDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="movieDirector" class="form-label">Director</label>
+                                <input type="text" class="form-control" id="movieDirector" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="movieYear" class="form-label">Año</label>
+                                <input type="number" class="form-control" id="movieYear" min="1800" max="2100" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="movieGenres" class="form-label">Géneros (separados por coma)</label>
+                            <input type="text" class="form-control" id="movieGenres"
+                                placeholder="Ej: Acción, Comedia, Drama" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="moviePosterUrl" class="form-label">URL del Póster</label>
+                            <input type="url" class="form-control" id="moviePosterUrl"
+                                placeholder="https://ejemplo.com/poster.jpg">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveMovieBtn">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+    <script>
+        const moviesApiUrl = ''; // TODO: usanr URL de la API
+        const moviesContainer = document.getElementById('movies-container');
+        const movieForm = document.getElementById('movieForm');
+        const addMovieBtn = document.getElementById('addMovieBtn');
+        const saveMovieBtn = document.getElementById('saveMovieBtn');
+
+        
+        const movieModalElement = document.getElementById('movieModal');
+        const movieModal = new bootstrap.Modal(movieModalElement);
+
+        let sampleMovieData = [{
+                "title": "Inception",
+                "decription": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+                "director": "Christopher Nolan",
+                "year": 2010,
+                "genre": ["Science Fiction", "Thriller"],
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+                "id": 1749769847012
+            },
+            {
+                "title": "The Shawshank Redemption",
+                "decription": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+                "director": "Frank Darabont",
+                "year": 1994,
+                "genre": ["Drama"],
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
+                "id": 1749769847013
+            },
+            {
+                "title": "The Godfather",
+                "decription": "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.",
+                "director": "Francis Ford Coppola",
+                "year": 1972,
+                "genre": ["Crime", "Drama"],
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+                "id": 1749769847014
+            }]
+
+        async function fetchMovies() {
+
+            renderMovies(sampleMovieData);
+        }
+
+        function renderMovies(movies) {
+            moviesContainer.innerHTML = '';
+            if (!movies || movies.length === 0) {
+                moviesContainer.innerHTML = '<p class="text-center col-12">No hay películas para mostrar. ¡Añade una!</p>';
+                return;
+            }
+
+            movies.forEach(movie => {
+                const posterImage = movie.poster_url
+                    ? `<img src="${movie.poster_url}" class="card-img-top" alt="Póster de ${movie.title}">`
+                    : `<div class="card-img-placeholder d-flex align-items-center justify-content-center h-100"><span>Sin póster disponible</span></div>`;
+
+                const movieCardCol = document.createElement('div');
+
+                movieCardCol.className = 'col';
+
+                movieCardCol.innerHTML = `
+                    <div class="card movie-card shadow-sm">
+                        <div class="card-img-top-container">
+                            ${posterImage}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${movie.title}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Dir: ${movie.director} (${movie.year})</h6>
+                            <p class="card-text">${movie.decription.substring(0, 100)}${movie.decription.length > 100 ? '...' : ''}</p>
+                            <div>
+                                <strong>Géneros:</strong>
+                                ${movie.genre.map(g => `<span class="badge bg-info text-info-dark badge-genre">${g}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 pb-3">
+                            <button class="btn btn-sm btn-outline-primary me-2 edit-btn" data-id="${movie.id}">Editar</button>
+                            <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${movie.id}">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+                moviesContainer.appendChild(movieCardCol);
+            });
+
+            // Añadir event listeners a los nuevos botones después de renderizar
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', (e) => prepareMovieModal(parseInt(e.target.dataset.id)));
+            });
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => deleteMovie(parseInt(e.target.dataset.id)));
+            });
+        }
+
+        function prepareMovieModal(movieId = null) {
+            movieForm.reset();
+            document.getElementById('movieId').value = '';
+
+            if (movieId) {
+                const movie = sampleMovieData.find(m => m.id === movieId);
+                if (movie) {
+                    document.getElementById('movieModalLabel').textContent = 'Editar Película';
+                    document.getElementById('movieId').value = movie.id;
+                    document.getElementById('movieTitle').value = movie.title;
+                    document.getElementById('movieDescription').value = movie.decription;
+                    document.getElementById('movieDirector').value = movie.director;
+                    document.getElementById('movieYear').value = movie.year;
+                    document.getElementById('movieGenres').value = movie.genre.join(', ');
+                    document.getElementById('moviePosterUrl').value = movie.poster_url || '';
+                }
+            } else {
+                document.getElementById('movieModalLabel').textContent = 'Añadir Nueva Película';
+            }
+            movieModal.show();
+        }
+
+        addMovieBtn.addEventListener('click', () => prepareMovieModal());
+        saveMovieBtn.addEventListener('click', handleFormSubmit);
+
+
+        function handleFormSubmit() {
+            const id = document.getElementById('movieId').value;
+            const movieData = {
+                title: document.getElementById('movieTitle').value.trim(),
+                decription: document.getElementById('movieDescription').value.trim(),
+                director: document.getElementById('movieDirector').value.trim(),
+                year: parseInt(document.getElementById('movieYear').value),
+                genre: document.getElementById('movieGenres').value.split(',').map(g => g.trim()).filter(g => g),
+                poster_url: document.getElementById('moviePosterUrl').value.trim()
+            };
+
+            if (!movieData.title || !movieData.decription || !movieData.director || isNaN(movieData.year) || movieData.genre.length === 0) {
+                // Podrías implementar una alerta más elegante aquí
+                alert("Por favor, completa todos los campos obligatorios (Título, Descripción, Director, Año, Géneros).");
+                return;
+            }
+            if (movieData.poster_url && !isValidHttpUrl(movieData.poster_url)) {
+                alert("La URL del póster no es válida. Debe empezar con http:// o https://");
+                return;
+            }
+
+
+            if (id) {
+                updateMovie(parseInt(id), movieData);
+            } else {
+                createMovie(movieData);
+            }
+            movieModal.hide();
+        }
+
+        function isValidHttpUrl(string) {
+            let url;
+            try {
+                url = new URL(string);
+            } catch (_) {
+                return false;
+            }
+            return url.protocol === "http:" || url.protocol === "https:";
+        }
+
+        function createMovie(movieData) {
+
+            const newMovie = { ...movieData, id: Date.now() };
+            sampleMovieData.push(newMovie);
+            fetchMovies();
+
+            console.log('Película añadida (simulación)', newMovie);
+        }
+
+        function updateMovie(movieId, movieData) {
+
+            const index = sampleMovieData.findIndex(m => m.id === movieId);
+            if (index !== -1) {
+                sampleMovieData[index] = { ...sampleMovieData[index], ...movieData };
+                fetchMovies();
+                console.log('Película actualizada (simulación)', sampleMovieData[index]);
+            }
+        }
+
+        function deleteMovie(movieId) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta película?')) {
+
+                sampleMovieData = sampleMovieData.filter(m => m.id !== movieId);
+                fetchMovies();
+                console.log('Película eliminada (simulación), ID:', movieId);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchMovies);
+    </script>
+</body>
+
+</html>

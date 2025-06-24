@@ -5,14 +5,16 @@
     "director": "Christopher Nolan",
     "year": 2010,
     "genre": ["Science Fiction", "Thriller"],
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
     "id": 1749769847012
   },
   {
     "title": "The Shawshank Redemption",
-    "decription": "Two imprisoned",
+    "decription": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
     "director": "Frank Darabont",
     "year": 1994,
     "genre": ["Drama"],
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
     "id": 1749769847013
   },
   {
@@ -21,22 +23,7 @@
     "director": "Francis Ford Coppola",
     "year": 1972,
     "genre": ["Crime", "Drama"],
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
     "id": 1749769847014
-  },
-  {
-    "title": "The Dark Knight",
-    "decription": "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.",
-    "director": "Christopher Nolan",
-    "year": 2008,
-    "genre": ["Action", "Crime"],
-    "id": 1749769847015
-  },
-  {
-    "title": "Pulp Fiction",
-    "decription": "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
-    "director": "Quentin Tarantino",
-    "year": 1994,
-    "genre": ["Crime", "Drama"],
-    "id": 1749769847016 
   }
 ]
