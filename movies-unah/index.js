@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors' // disponible gracias a la instalación
 import moviesRoutes from './routes/movies.routes.js'
 
 const app = express() // para crear la aplicación de express
@@ -6,6 +7,20 @@ const PORT = process.env.PORT || 3000 // puerto donde se ejecutará la aplicaci�
 
 // middlewares
 app.use(express.json()) // se encarga de parsear el body de las peticiones
+app.use(cors({
+    // configuración de los origenes permitidos
+    origin: [
+        'http://localhost:5500',
+        'http://127.0.0.1:5500',
+        'https://prod.server.com',
+        'https://test.server.com'
+    ],
+    // metodos permitidos
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    // encabezados permitidos
+    allowedHeaders: ['Content-Type', 'Authorization', 'Bearer', 'api-key']
+}))
+
 // app.use((req, res, next) => {
 
 //     let body = '';

@@ -176,50 +176,44 @@
     </div>
 
     <!-- Bootstrap JS Bundle (incluye Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
 
     <script>
-        const moviesApiUrl = ''; // TODO: usanr URL de la API
+        const moviesApiUrl = 'http://localhost:3000';
         const moviesContainer = document.getElementById('movies-container');
         const movieForm = document.getElementById('movieForm');
         const addMovieBtn = document.getElementById('addMovieBtn');
         const saveMovieBtn = document.getElementById('saveMovieBtn');
 
-        
+
         const movieModalElement = document.getElementById('movieModal');
         const movieModal = new bootstrap.Modal(movieModalElement);
 
-        let sampleMovieData = [{
-                "title": "Inception",
-                "decription": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
-                "director": "Christopher Nolan",
-                "year": 2010,
-                "genre": ["Science Fiction", "Thriller"],
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-                "id": 1749769847012
-            },
-            {
-                "title": "The Shawshank Redemption",
-                "decription": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-                "director": "Frank Darabont",
-                "year": 1994,
-                "genre": ["Drama"],
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
-                "id": 1749769847013
-            },
-            {
-                "title": "The Godfather",
-                "decription": "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.",
-                "director": "Francis Ford Coppola",
-                "year": 1972,
-                "genre": ["Crime", "Drama"],
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-                "id": 1749769847014
-            }]
+
 
         async function fetchMovies() {
 
-            renderMovies(sampleMovieData);
+            // por default, usa el metodo GET
+            try {
+                const response = await fetch(`${moviesApiUrl}/movies`)
+
+                console.log(response)
+
+                if (!response.ok) {
+                    throw new Error(`Error al cargar las películas: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json()
+
+                renderMovies(data);
+            } catch (error) {
+                console.error('Error al cargar las películas:', error);
+                renderMovies([]);
+            }
+
+
         }
 
         function renderMovies(movies) {
