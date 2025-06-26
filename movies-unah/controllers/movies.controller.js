@@ -1,5 +1,6 @@
 
 import movies from '../local_db/movies.json' with { type: 'json' }
+import { validateMovie } from '../schemas/movie.schema.js'
 
 // controlar la integridad de los datos
 // que se cumplan todas las reglas de validacion
@@ -63,10 +64,19 @@ export const searchById = (req, res) => {
 }
 export const create = (req, res) => {
 
-    const id = Date.now() // genera un id único basado en la fecha actual
+    const data = req.body // ya con los datos que vienen del body
 
-    req.body.id = id
-    movies.push(req.body) // agrega la película al array de películas
+    const { success, error, data: safeData } = validateMovie(data)
+
+    if (!success) {
+        res.status(400).json(error)
+    }
+
+    const id = Date.now() // genera un id único basado en la fecha actual
+    safeData.id = id // asigna el id a los datos de la película
+
+    //llamar al servicio de movies
+    movies.push(safeData) // agrega la película al array de películas
 
     res
         .status(201) // establece el código de estado HTTP a 201 (Creado)

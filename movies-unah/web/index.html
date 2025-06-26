@@ -192,6 +192,7 @@
         const movieModal = new bootstrap.Modal(movieModalElement);
 
 
+        let sampleMovieData = []
 
         async function fetchMovies() {
 
@@ -205,9 +206,9 @@
                     throw new Error(`Error al cargar las películas: ${response.status} ${response.statusText}`);
                 }
 
-                const data = await response.json()
+                sampleMovieData = await response.json()
 
-                renderMovies(data);
+                renderMovies(sampleMovieData);
             } catch (error) {
                 console.error('Error al cargar las películas:', error);
                 renderMovies([]);
@@ -332,8 +333,18 @@
 
         function createMovie(movieData) {
 
-            const newMovie = { ...movieData, id: Date.now() };
-            sampleMovieData.push(newMovie);
+            //TODO: completar
+            
+            fetch(`${moviesApiUrl}/movies`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(movieData)
+            })
+
+
+
             fetchMovies();
 
             console.log('Película añadida (simulación)', newMovie);
