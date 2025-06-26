@@ -1,8 +1,13 @@
 import express from 'express'
 import cors from 'cors' // disponible gracias a la instalación
+import authRoutes from './routes/auth.routes.js' // rutas de autenticación
 import moviesRoutes from './routes/movies.routes.js'
+import dotenv from 'dotenv' // para cargar las variables de entorno desde el archivo .env
 
 const app = express() // para crear la aplicación de express
+
+dotenv.config()// cargar las varianles del entorno desde el archivo .env
+
 const PORT = process.env.PORT || 3000 // puerto donde se ejecutará la aplicación
 
 // middlewares
@@ -39,6 +44,9 @@ app.use(cors({
 
 // rutas de peliculas
 app.use('/movies', moviesRoutes)
+
+//rutas de autenticación
+app.use('/auth', authRoutes)
 
 // ruta por defecto, cuando no hace match 
 app.use((req, res) => {
