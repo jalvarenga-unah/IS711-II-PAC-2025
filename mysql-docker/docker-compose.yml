@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: movies_unah
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: unah1234
+      MYSQL_DATABASE: movies_unah
+      MYSQL_USER: unah
+      MYSQL_PASSWORD: unah1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+
+volumes:
+  mysql_data:
