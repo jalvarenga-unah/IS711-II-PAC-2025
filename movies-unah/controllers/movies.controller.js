@@ -1,15 +1,23 @@
 
 import movies from '../local_db/movies.json' with { type: 'json' }
 import { validateMovie } from '../schemas/movie.schema.js'
-
+import { getAllMovies } from '../models/movies.js'
 // controlar la integridad de los datos
 // que se cumplan todas las reglas de validacion
 // controlar los posibles errores
 // gestionar las respuestas
 
-export const getAll = (req, res) => {
+export const getAll = async (req, res) => {
 
-    // TODO: llamar al modelo que traera los datos de la base datos
+
+    try {
+        //TODO: para parsear los datos de la base de datos
+        const moviesDB = await getAllMovies()
+    } catch (error) {
+        //TODO:
+    }
+
+
     res.json(movies)
 }
 
