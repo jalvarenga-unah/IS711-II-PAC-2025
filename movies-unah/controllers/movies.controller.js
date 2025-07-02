@@ -13,12 +13,25 @@ export const getAll = async (req, res) => {
     try {
         //TODO: para parsear los datos de la base de datos
         const moviesDB = await getAllMovies()
+
+
+        const parsedMovies = moviesDB.map((movie) => {
+            movie.genres = movie.genres.split(',')
+
+            return movie
+        })
+
+
+        res.json(parsedMovies)
+
     } catch (error) {
-        //TODO:
+        res.status(400).json({
+            message: 'Error al obtener las películas',
+        })
     }
 
 
-    res.json(movies)
+
 }
 
 export const searchByQuery = (req, res) => {

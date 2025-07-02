@@ -12,14 +12,14 @@ export const getAllMovies = async () => {
                     m.poster_url,
                     GROUP_CONCAT(g.name) AS genres
                     FROM movies m
-                    JOIN movie_genres mg ON m.id = mg.movie_id
-                    JOIN genres g ON g.id = mg.genre_id
+                    LEFT JOIN movie_genres mg ON m.id = mg.movie_id
+                    LEFT JOIN genres g ON g.id = mg.genre_id
                     GROUP BY m.id; `
 
 
 
-    const [rows] = await pool.query(query);
+    const [results] = await pool.query(query);
 
-    return rows
+    return results
 
 }
