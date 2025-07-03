@@ -1,22 +1,22 @@
 
 import movies from '../local_db/movies.json' with { type: 'json' }
 import { validateMovie } from '../schemas/movie.schema.js'
-import { getAllMovies } from '../models/movies.js'
+import { getAllMovies, getMovieById } from '../models/movies.js'
 // controlar la integridad de los datos
 // que se cumplan todas las reglas de validacion
 // controlar los posibles errores
 // gestionar las respuestas
 
 export const getAll = async (req, res) => {
-
-
     try {
-        //TODO: para parsear los datos de la base de datos
+
         const moviesDB = await getAllMovies()
 
-
         const parsedMovies = moviesDB.map((movie) => {
-            movie.genres = movie.genres.split(',')
+
+            if (movie.genres)
+                movie.genres = movie.genres.split(',')
+            else movie.genres = []
 
             return movie
         })
@@ -26,7 +26,7 @@ export const getAll = async (req, res) => {
 
     } catch (error) {
         res.status(400).json({
-            message: 'Error al obtener las películas',
+            message: 'Error al obtener las películas ' + error.message,
         })
     }
 
@@ -57,30 +57,21 @@ export const searchByQuery = (req, res) => {
 
 }
 
-export const searchById = (req, res) => {
+export const searchById = async (req, res) => {
 
     const { id } = req.params
 
-    const parsedId = Number(id) // convierte el id a un número
+    const movie = await getMovieById(id)
 
-    if (isNaN(parsedId)) {
-        res.status(400).json({
-            message: 'El id debe ser un número'
-        })
-    }
+    console.log(movie)
 
-    //TODO: llamar al modelo que trae los registros de la base de datos
-    const movie = movies.find(({ id }) => {
-        return id === parsedId
-    })
+    // if (!movie) {
+    //     res.status(404).json({
+    //         message: 'La película no existe'
+    //     })
+    // }
 
-    if (!movie) {
-        res.status(404).json({
-            message: 'La película no existe'
-        })
-    }
-
-    res.json(movie)
+    res.status(movie.length === 0 ? 204 : 200).json(movie)
 
 }
 export const create = (req, res) => {

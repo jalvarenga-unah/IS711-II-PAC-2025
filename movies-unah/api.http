@@ -5,7 +5,7 @@ GET http://localhost:3000/movies
 
 
 ### consulta por id de pelicula
-GET http://localhost:3000/movies/1749769847016
+GET http://localhost:3000/movies/5fbb1b6d-5510-11f0-b6f2-1e24d107da40
 
 ### consulta por genero
 GET http://localhost:3000/movies/search?genre=Action

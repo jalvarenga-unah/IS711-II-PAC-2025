@@ -244,7 +244,7 @@
                             <p class="card-text">${movie.decription.substring(0, 100)}${movie.decription.length > 100 ? '...' : ''}</p>
                             <div>
                                 <strong>Géneros:</strong>
-                                ${movie.genre.map(g => `<span class="badge bg-info text-info-dark badge-genre">${g}</span>`).join('')}
+                                ${movie.genre?.map(g => `<span class="badge bg-info text-info-dark badge-genre">${g}</span>`).join('')}
                             </div>
                         </div>
                         <div class="card-footer bg-transparent border-top-0 pb-3">
