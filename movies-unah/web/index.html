@@ -258,10 +258,10 @@
 
             // Añadir event listeners a los nuevos botones después de renderizar
             document.querySelectorAll('.edit-btn').forEach(button => {
-                button.addEventListener('click', (e) => prepareMovieModal(parseInt(e.target.dataset.id)));
+                button.addEventListener('click', (e) => prepareMovieModal(e.target.dataset.id));
             });
             document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', (e) => deleteMovie(parseInt(e.target.dataset.id)));
+                button.addEventListener('click', (e) => deleteMovie(e.target.dataset.id));
             });
         }
 
@@ -314,7 +314,7 @@
 
 
             if (id) {
-                updateMovie(parseInt(id), movieData);
+                updateMovie((id), movieData);
             } else {
                 createMovie(movieData);
             }
