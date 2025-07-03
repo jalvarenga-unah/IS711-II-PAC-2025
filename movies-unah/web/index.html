@@ -200,7 +200,6 @@
             try {
                 const response = await fetch(`${moviesApiUrl}/movies`)
 
-                console.log(response)
 
                 if (!response.ok) {
                     throw new Error(`Error al cargar las películas: ${response.status} ${response.statusText}`);
@@ -218,6 +217,7 @@
         }
 
         function renderMovies(movies) {
+
             moviesContainer.innerHTML = '';
             if (!movies || movies.length === 0) {
                 moviesContainer.innerHTML = '<p class="text-center col-12">No hay películas para mostrar. ¡Añade una!</p>';
@@ -241,10 +241,10 @@
                         <div class="card-body">
                             <h5 class="card-title">${movie.title}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Dir: ${movie.director} (${movie.year})</h6>
-                            <p class="card-text">${movie.decription.substring(0, 100)}${movie.decription.length > 100 ? '...' : ''}</p>
+                            <p class="card-text">${movie.description.substring(0, 100)}${movie.description.length > 100 ? '...' : ''}</p>
                             <div>
                                 <strong>Géneros:</strong>
-                                ${movie.genre?.map(g => `<span class="badge bg-info text-info-dark badge-genre">${g}</span>`).join('')}
+                                ${movie.genres?.map(g => `<span class="badge bg-info text-info-dark badge-genre">${g}</span>`).join('')}
                             </div>
                         </div>
                         <div class="card-footer bg-transparent border-top-0 pb-3">
@@ -275,10 +275,10 @@
                     document.getElementById('movieModalLabel').textContent = 'Editar Película';
                     document.getElementById('movieId').value = movie.id;
                     document.getElementById('movieTitle').value = movie.title;
-                    document.getElementById('movieDescription').value = movie.decription;
+                    document.getElementById('movieDescription').value = movie.description;
                     document.getElementById('movieDirector').value = movie.director;
                     document.getElementById('movieYear').value = movie.year;
-                    document.getElementById('movieGenres').value = movie.genre.join(', ');
+                    document.getElementById('movieGenres').value = movie.genres.join(', ');
                     document.getElementById('moviePosterUrl').value = movie.poster_url || '';
                 }
             } else {
@@ -295,14 +295,14 @@
             const id = document.getElementById('movieId').value;
             const movieData = {
                 title: document.getElementById('movieTitle').value.trim(),
-                decription: document.getElementById('movieDescription').value.trim(),
+                description: document.getElementById('movieDescription').value.trim(),
                 director: document.getElementById('movieDirector').value.trim(),
                 year: parseInt(document.getElementById('movieYear').value),
                 genre: document.getElementById('movieGenres').value.split(',').map(g => g.trim()).filter(g => g),
                 poster_url: document.getElementById('moviePosterUrl').value.trim()
             };
 
-            if (!movieData.title || !movieData.decription || !movieData.director || isNaN(movieData.year) || movieData.genre.length === 0) {
+            if (!movieData.title || !movieData.description || !movieData.director || isNaN(movieData.year) || movieData.genre.length === 0) {
                 // Podrías implementar una alerta más elegante aquí
                 alert("Por favor, completa todos los campos obligatorios (Título, Descripción, Director, Año, Géneros).");
                 return;
@@ -334,8 +334,8 @@
         function createMovie(movieData) {
 
             //TODO: completar
-            
-            fetch(`${moviesApiUrl}/movies`,{
+
+            fetch(`${moviesApiUrl}/movies`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
