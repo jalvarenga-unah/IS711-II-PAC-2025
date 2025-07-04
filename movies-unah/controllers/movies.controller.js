@@ -1,7 +1,8 @@
 
 import movies from '../local_db/movies.json' with { type: 'json' }
 import { validateMovie } from '../schemas/movie.schema.js'
-import { getAllMovies, getMovieById } from '../models/movies.js'
+import { getAllMovies, getMovieById, insertMovie } from '../models/movies.js'
+import { v4 as uuidv4 } from 'uuid';
 // controlar la integridad de los datos
 // que se cumplan todas las reglas de validacion
 // controlar los posibles errores
@@ -74,7 +75,7 @@ export const searchById = async (req, res) => {
     res.status(movie.length === 0 ? 204 : 200).json(movie)
 
 }
-export const create = (req, res) => {
+export const create = async (req, res) => {
 
     const data = req.body // ya con los datos que vienen del body
 
@@ -84,15 +85,21 @@ export const create = (req, res) => {
         res.status(400).json(error)
     }
 
-    const id = Date.now() // genera un id único basado en la fecha actual
-    safeData.id = id // asigna el id a los datos de la película
+    //insert en la base de datos
+    const id = uuidv4()
+    safeData.id = id
 
-    //llamar al servicio de movies
-    movies.push(safeData) // agrega la película al array de películas
+    try {
+        const response = await insertMovie(safeData)
 
-    res
-        .status(201) // establece el código de estado HTTP a 201 (Creado)
-        .json(req.body)
+        res
+            .status(201) // establece el código de estado HTTP a 201 (Creado)
+            .json(response)
+    } catch (error) {
+        res.status(400).json({
+            message: 'Error al insertar la película: ' + error.message,
+        })
+    }
 }
 
 export const deleteMovie = (req, res) => {

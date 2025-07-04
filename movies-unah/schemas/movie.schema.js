@@ -23,7 +23,7 @@ const movieSchema = zod.object({
     "director": zod.string().min(5),
     "year": zod.number().int().gte(1888).lte(new Date().getFullYear()),
     "poster_url": zod.string().url(),
-    "genre": zod.array(zod.string()).min(1).nonempty(),
+    "genres": zod.array(zod.string().uuid({ version: "v4" })).min(1).nonempty(),
 }).strict()
 
 export const validateMovie = (movie) => {

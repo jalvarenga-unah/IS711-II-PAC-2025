@@ -21,9 +21,9 @@ Content-Type: application/json
     "director": "Christopher Nolan",
     "year": 2010,
     "poster_url": "https://m.media-amazon.com/images/I/71uKM+LdgFL._UF894,1000_QL80_.jpg",
-    "genre": [
-        "Science Fiction",
-        "Thriller"
+    "genres": [
+        "5fbacfa8-5510-11f0-b6f2-1e24d107da40",
+        "5fbad254-5510-11f0-b6f2-1e24d107da40"
     ]
 }
 
