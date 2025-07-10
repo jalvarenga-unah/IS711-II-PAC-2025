@@ -1,15 +1,22 @@
 import jwt from 'jsonwebtoken' // para generar el token
+import bcrypt from 'bcrypt'
+import { loginUser, register } from '../models/auth.js' // importar el modelo de autenticación
 
-export const login = (req, res) => {
+import { v4 as uuidv4 } from 'uuid';
 
-    const data = {
-        id: 125236,
-        name: 'Juan Alvarenga',
-        email: 'jealvarengar@unah.edu.hn',
-        password: '$dri3omweihfeˆ#$346.23823523',
-        role: 'admin',
-        phone: '9999-9999',
-    };
+export const login = async (req, res) => {
+
+    const { user, password } = req.body
+
+    const data = await loginUser(user)
+
+    // validar que la contraseña sea correcta
+
+
+    // validar si no debe cambiar la contraseña
+
+
+    // puedo retornar la información del usuario
 
     const payload = {
         id: data.id,
@@ -31,6 +38,24 @@ export const login = (req, res) => {
         data: data,
         token
     })
+
+
+}
+
+export const createUser = async (req, res) => {
+
+    const { name, email, phone } = req.body
+
+    const id = uuidv4()
+
+    //generar una clave
+    //TODO: generar una clave aleatoria
+    const password_hash = await bcrypt.hash(password, 10)
+
+    const result = await register([id, name, email, phone, password_hash])
+
+    // TODO: envair correro
+
 
 
 }

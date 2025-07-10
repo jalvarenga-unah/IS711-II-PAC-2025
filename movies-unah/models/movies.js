@@ -65,10 +65,16 @@ export const insertMovie = async (movie) => {
     await conn.execute(query, [id, title, description, director, year, poster_url])
 
     //Preparar la consulta de movie_genres
-    genres.forEach(async (genre) => {
-      const genreQuery = `INSERT INTO movie_genres (movie_id, genre_id) VALUES (?,?) `
-      await conn.execute(genreQuery, [id, genre])
-    })
+    // genres.forEach(async (genre) => {
+    //   const genreQuery = `INSERT INTO movie_genres (movie_id, genre_id) VALUES (?,?) `
+    //   await conn.execute(genreQuery, [id, genre])
+    // })
+
+    await Promise.all(
+      genres.map((genre) => {
+        const genreQuery = `INSERT INTO movie_genres (movie_id, genre_id) VALUES (?,?) `
+        return conn.execute(genreQuery, [id, genre])
+      }))
 
     conn.commit()
 

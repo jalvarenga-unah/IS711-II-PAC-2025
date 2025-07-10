@@ -16,13 +16,12 @@ POST http://localhost:3000/movies
 Content-Type: application/json
 
 {
-    "title": "Inception II",
+    "title": "Inception III",
     "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
     "director": "Christopher Nolan",
     "year": 2010,
     "poster_url": "https://m.media-amazon.com/images/I/71uKM+LdgFL._UF894,1000_QL80_.jpg",
     "genres": [
-        "5fbacfa8-5510-11f0-b6f2-1e24d107da40",
         "5fbad254-5510-11f0-b6f2-1e24d107da40"
     ]
 }
@@ -35,7 +34,7 @@ PATCH http://localhost:3000/movies/1749769847012
 Content-Type: application/json
 
 {
-    "title": "Inception II",
+    "title": "Inception III",
     "decription": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
     "year": 2010,
     "poster_url": "https://example.com/inception-poster.jpg",
