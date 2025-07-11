@@ -49,6 +49,17 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "admin",
-    "password": "admin123"
+    "user": "juan.alvarenga@ess.hn",
+    "password": "1234"
+}
+
+### Registro de usuario
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "name":"Juan Alvarenga",
+ "email":"juan.alvarenga@ess.hn", 
+ "phone": "99999999",
+ "role": "admin"
 }
