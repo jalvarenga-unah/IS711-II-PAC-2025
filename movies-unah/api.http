@@ -63,3 +63,16 @@ Content-Type: application/json
  "phone": "99999999",
  "role": "admin"
 }
+
+
+### Cambio de contraseña
+
+PATCH http://localhost:3000/auth/set-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGVkYTMyLTk5ZjEtNDNmNy1iMGJjLTQwYTc5MzdiMmVlMCIsInBhc3N3b3JkIjoiJDJiJDEwJFhpVWtIdmlTRlJOVWh4UVZNbWQ1Z083eEhNVHBVaENpSkVuYzdRREhGQUNwMlB6M1RsSG11IiwiaWF0IjoxNzUyNjIxODIyLCJleHAiOjE3NTI2MjU0MjJ9.C1g1r6f3AqJQN8sY0C2XXk_bGh2oU0T6Ae9Z-iUk0ok
+
+{ 
+ "old_password":"1234",
+ "new_password":"unah1234", 
+ "confirm_password": "unah1234"
+}
