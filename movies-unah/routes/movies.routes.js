@@ -14,12 +14,12 @@ import {
 const moviesRouter = Router()
 
 //añadir proteccion a las rutas
-moviesRouter.get('/', isAuth, (req, res) => {
+moviesRouter.get('/', (req, res) => {
     getAll(req, res)
 })
 
 // moviesRouter.get('/search', search)
-moviesRouter.get('/:id', isAuth, searchById)
+moviesRouter.get('/:id', searchById)
 
 moviesRouter.post('/', isAuth, create)
 

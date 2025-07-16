@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken' // para generar el token
 import bcrypt from 'bcrypt'
-import { loginUser, register } from '../models/auth.js' // importar el modelo de autenticación
+import { loginUser, register, updatePassword } from '../models/auth.js' // importar el modelo de autenticación
 import { Resend } from 'resend'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -112,9 +112,6 @@ export const createUser = async (req, res) => {
             error: error.message
         })
     }
-
-
-
 }
 
 export const setPassword = async (req, res) => {
@@ -127,8 +124,6 @@ export const setPassword = async (req, res) => {
             new_password,
             confirm_password
         } = req.body
-
-
 
     try {
         const { id, password } = jwt.verify(token, process.env.JWT_SECRET)
@@ -152,8 +147,15 @@ export const setPassword = async (req, res) => {
             return
         }
 
-        //TODO: enviar al modelo para actualizar la contraseña
+        const passwordHash = await bcrypt.hash(new_password, 10)
 
+        await updatePassword(id, passwordHash)
+
+
+        res.json({
+            success: true,
+            message: 'Contraseña actualizada correctamente'
+        })
     }
     catch (error) {
         res.status(401).json({
@@ -162,16 +164,4 @@ export const setPassword = async (req, res) => {
         })
         return
     }
-
-
-
-
-    res.json(
-        {
-            success: true,
-            message: 'Contraseña actualizada correctamente'
-        }
-    )
-
-
 }

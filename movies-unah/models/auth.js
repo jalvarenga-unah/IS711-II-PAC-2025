@@ -21,3 +21,15 @@ export const register = async (user) => {
     return rows
 
 }
+
+export const updatePassword = async (id, password_hash) => {
+
+    const query = `UPDATE users SET password_hash = ?,
+             must_change_password = 0 WHERE id = UUID_TO_BIN(?)`
+
+
+    const [rows] = await pool.query(query, [password_hash, id])
+
+    return rows
+
+}

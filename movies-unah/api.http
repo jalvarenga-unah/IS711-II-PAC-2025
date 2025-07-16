@@ -50,7 +50,7 @@ Content-Type: application/json
 
 {
     "user": "juan.alvarenga@ess.hn",
-    "password": "1234"
+    "password": "unah1234"
 }
 
 ### Registro de usuario
@@ -69,7 +69,7 @@ Content-Type: application/json
 
 PATCH http://localhost:3000/auth/set-password
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGVkYTMyLTk5ZjEtNDNmNy1iMGJjLTQwYTc5MzdiMmVlMCIsInBhc3N3b3JkIjoiJDJiJDEwJFhpVWtIdmlTRlJOVWh4UVZNbWQ1Z083eEhNVHBVaENpSkVuYzdRREhGQUNwMlB6M1RsSG11IiwiaWF0IjoxNzUyNjIxODIyLCJleHAiOjE3NTI2MjU0MjJ9.C1g1r6f3AqJQN8sY0C2XXk_bGh2oU0T6Ae9Z-iUk0ok
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGVkYTMyLTk5ZjEtNDNmNy1iMGJjLTQwYTc5MzdiMmVlMCIsInBhc3N3b3JkIjoiJDJiJDEwJFhpVWtIdmlTRlJOVWh4UVZNbWQ1Z083eEhNVHBVaENpSkVuYzdRREhGQUNwMlB6M1RsSG11IiwiaWF0IjoxNzUyNzA3OTI3LCJleHAiOjE3NTI3MTE1Mjd9.XVFSoy6OssvYqcT5fA3ly2jaR8Q1uPYeTHrQiKq2DP8
 
 { 
  "old_password":"1234",
