@@ -20,7 +20,11 @@ export const isAuth = (req, res, next) => {
 
     try {
 
-        jwt.verify(token, process.env.JWT_SECRET)
+        const { role } = jwt.verify(token, process.env.JWT_SECRET)
+
+        req.params.role = role
+
+
         next()
     } catch (error) {
 

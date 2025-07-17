@@ -10,6 +10,7 @@ import {
     update,
     getAll
 } from '../controllers/movies.controller.js'
+import { isAdmin } from '../middlewares/isAdmin.js'
 
 const moviesRouter = Router()
 
@@ -21,9 +22,8 @@ moviesRouter.get('/', (req, res) => {
 // moviesRouter.get('/search', search)
 moviesRouter.get('/:id', searchById)
 
-moviesRouter.post('/', isAuth, create)
-
-moviesRouter.delete('/:id', isAuth, deleteMovie)
+moviesRouter.post('/', [isAuth, isAdmin], create)
+moviesRouter.delete('/:id', [isAuth, isAdmin], deleteMovie)
 
 moviesRouter.patch('/:id', isAuth, update)
 

@@ -14,6 +14,7 @@ GET http://localhost:3000/movies/search?genre=Action
 ### Crear una pelicula
 POST http://localhost:3000/movies
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGVkYTMyLTk5ZjEtNDNmNy1iMGJjLTQwYTc5MzdiMmVlMCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mjc5NDc3NiwiZXhwIjoxNzUyODM3OTc2fQ.nIZlAu6FZBJpxCaD5oUeg05QY8wikp2L3XilPtqmH1U
 
 {
     "title": "Inception III",
@@ -28,6 +29,8 @@ Content-Type: application/json
 
 ### eliminar una pelicula
 DELETE http://localhost:3000/movies/1749769847012
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGVkYTMyLTk5ZjEtNDNmNy1iMGJjLTQwYTc5MzdiMmVlMCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mjc5NDc3NiwiZXhwIjoxNzUyODM3OTc2fQ.nIZlAu6FZBJpxCaD5oUeg05QY8wikp2L3XilPtqmH1U 
+# user: Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFiMDg0YWRiLTJkMjEtNGM1ZC04YTNlLTRjNWFkOTEyNDY2YSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUyNzk0Njc3LCJleHAiOjE3NTI4Mzc4Nzd9.1BAOumTmXNqLYDyoI9I8lF-y-yLEPyUDKmsJFgOU5VY
 
 ### Actualziar una pelicula
 PATCH http://localhost:3000/movies/1749769847012
@@ -59,9 +62,9 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 { "name":"Juan Alvarenga",
- "email":"juan.alvarenga@ess.hn", 
+ "email":"jealvarengar@unah.edu.hn", 
  "phone": "99999999",
- "role": "admin"
+ "role": "user"
 }
 
 
@@ -69,7 +72,7 @@ Content-Type: application/json
 
 PATCH http://localhost:3000/auth/set-password
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGVkYTMyLTk5ZjEtNDNmNy1iMGJjLTQwYTc5MzdiMmVlMCIsInBhc3N3b3JkIjoiJDJiJDEwJFhpVWtIdmlTRlJOVWh4UVZNbWQ1Z083eEhNVHBVaENpSkVuYzdRREhGQUNwMlB6M1RsSG11IiwiaWF0IjoxNzUyNzA3OTI3LCJleHAiOjE3NTI3MTE1Mjd9.XVFSoy6OssvYqcT5fA3ly2jaR8Q1uPYeTHrQiKq2DP8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFiMDg0YWRiLTJkMjEtNGM1ZC04YTNlLTRjNWFkOTEyNDY2YSIsInBhc3N3b3JkIjoiJDJiJDEwJHA3YlFMZkd4a1QyWDdtN1FZRDFlWWU1S2VSRG5wSEhXb1c0czE2RDlFN0hkWDBDZVNjVWtTIiwiaWF0IjoxNzUyNzk0NjQzLCJleHAiOjE3NTI3OTgyNDN9.dC9JbCFBbyjW3hO_b5kc7GiHZH8MHWzo0vgNeWzKlm8
 
 { 
  "old_password":"1234",
