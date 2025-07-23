@@ -33,3 +33,12 @@ Ejecutar el siguiente comando desde la consola de su computadora (despues de hab
 ```
 git clone https://github.com/jalvarenga-unah/IS711-II-PAC-2025.git
 ```
+ --- 
+
+# Repositorio API que incluye la protección de rateLimit
+
+```bash
+git clone https://github.com/jalvarenga-unah/movies-unah.git
+```
+ --- 
+

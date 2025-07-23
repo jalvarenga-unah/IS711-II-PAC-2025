@@ -20,9 +20,10 @@ export const isAuth = (req, res, next) => {
 
     try {
 
-        const { role } = jwt.verify(token, process.env.JWT_SECRET)
+        const { role, id } = jwt.verify(token, process.env.JWT_SECRET)
 
         req.params.role = role
+        req.params.id = id
 
 
         next()
